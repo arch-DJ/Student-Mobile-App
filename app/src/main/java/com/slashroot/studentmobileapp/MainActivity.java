@@ -1,5 +1,8 @@
 package com.slashroot.studentmobileapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,8 +55,29 @@ public class MainActivity extends AppCompatActivity {
     // Handle signup
     public void onClickSignup(View view) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Please choose the user type");
+        CharSequence[] options = {"Student", "Teacher", "Parent"};
+        alertDialogBuilder.setItems(options, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int userNumber) {
+                if (userNumber== 0) {
+                    Intent intent = new Intent(getApplicationContext(), StudentRegistration.class);
+                    startActivity(intent);
+                }
 
+                else if (userNumber == 1) {
+
+                }
+
+                else {
+
+                }
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
