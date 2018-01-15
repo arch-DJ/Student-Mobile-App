@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -18,13 +17,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
     final String serverURL = "http://192.168.117.221:3000/enter/";
 
+    // Handle login
     public void onClickLogin(View view) {
         TextView usernameField = findViewById(R.id.loginId);
         String username = usernameField.getText().toString();
@@ -49,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    // Handle signup
+    public void onClickSignup(View view) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
     }
 
     @Override
