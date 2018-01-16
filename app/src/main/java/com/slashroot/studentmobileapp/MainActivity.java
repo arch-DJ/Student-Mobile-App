@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -41,9 +44,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else {
-            LoginAttempt loginAttempt = new LoginAttempt();
+            ServerConnect serverConnect = new ServerConnect();
             try {
-                String response = loginAttempt.execute(serverURL, username, password).get();
+                JSONObject json = new JSONObject();
+                json.put("username", username);
+                json.put("password", password);
+                String response = serverConnect.execute(serverURL, json.toString()).get();
                 Toast.makeText(this, response, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
@@ -60,8 +66,9 @@ public class MainActivity extends AppCompatActivity {
         alertDialogBuilder.setItems(options, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int userNumber) {
                 if (userNumber== 0) {
-                    Intent intent = new Intent(getApplicationContext(), StudentRegistration.class);
-                    startActivity(intent);
+                    verifyAadhar();
+                    //Intent intent = new Intent(getApplicationContext(), StudentRegistration.class);
+                    //startActivity(intent);
                 }
 
                 else if (userNumber == 1) {
@@ -77,6 +84,41 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    public void verifyAadhar() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Please enter your Aadhar Number");
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        alertDialogBuilder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (input.getText().toString().isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please enter your Aadhar Number to continue", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(MainActivity.this, "Fetching Data from Server", Toast.LENGTH_SHORT).show();
+                    try {
+                        String aadharNumber = input.getText().toString();
+                        ServerConnect serverConnect = new ServerConnect();
+                        String response = serverConnect.execute("http://lit-springs-26930.herokuapp.com/user/fetchData/aadhaar/" + aadharNumber, "GET").get();
+                        Log.e("response",response);
+
+                    } catch (Exception e) {
+                        Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }                
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.setView(input);
+        alertDialog.show();
+    }
+
 
 
     @Override
@@ -86,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public class LoginAttempt extends AsyncTask<String, Void, String> {
+    public class ServerConnect extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
@@ -94,21 +136,23 @@ public class MainActivity extends AppCompatActivity {
             HttpURLConnection urlConnection;
             try {
                 // Opening Connection
-                JSONObject json = new JSONObject();
-                json.put("username", strings[1]);
-                json.put("password", strings[2]);
                 url = new URL(strings[0]);
+                String requestMethod = strings[1];
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestProperty("Content-Type", "application/json");
-                urlConnection.setRequestMethod("POST");
+                urlConnection.setRequestMethod(requestMethod);
                 urlConnection.connect();
 
-                // Sending login credentials
-                OutputStream outputStream = urlConnection.getOutputStream();
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
-                outputStreamWriter.write(json.toString());
-                outputStreamWriter.flush();
-                outputStreamWriter.close();
+                if (strings.length > 2) {
+                    // Sending login credentials
+                    String json = strings[2];
+                    OutputStream outputStream = urlConnection.getOutputStream();
+                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
+                    outputStreamWriter.write(json);
+                    outputStreamWriter.flush();
+                    outputStreamWriter.close();
+                }
+
 
                 // Receiving response from server
                 int responseCode = urlConnection.getResponseCode();
@@ -122,11 +166,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                     bufferedReader.close();
                     response = stringBuffer.toString();
-                    return "Login successful!";
+                    return response;
                 }
 
                 else {
-                    return "Login failed! Wrong username or password";
+                    return Integer.toString(responseCode);
                 }
 
             } catch (Exception e) {
