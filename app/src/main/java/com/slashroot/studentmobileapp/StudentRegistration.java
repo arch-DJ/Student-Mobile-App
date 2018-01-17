@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -47,6 +50,20 @@ public class StudentRegistration extends AppCompatActivity {
         addressTextView.setText("Address - " + address);
         genderTextView.setText("Gender - " + gender);
         branchTextView.setText("Branch - " + branch);
+    }
+
+    public void verifyEmail(View view) {
+        boolean checked = ((CheckBox) view).isChecked();
+
+        if (checked) {
+            TextView emailTextView = findViewById(R.id.email);
+            email = emailTextView.getText().toString();
+
+        }
+    }
+
+    public void verifyPhone(View view) {
+        Toast.makeText(this, "Phone", Toast.LENGTH_SHORT).show();
     }
 
     @Override

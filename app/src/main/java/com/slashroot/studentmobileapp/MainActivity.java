@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -28,6 +27,12 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
     final String serverURL = "http://192.168.117.221:3000/enter/";
+
+    // Open student Activity (Temp)
+    public void launchStudentActivity(View view) {
+        Intent intent = new Intent(getApplicationContext(), TeacherMainActivity.class);
+        startActivity(intent);
+    }
 
     // Handle login
     public void onClickLogin(View view) {
@@ -68,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int userNumber) {
                 if (userNumber== 0) {
                     verifyAadhar();
-                    //Intent intent = new Intent(getApplicationContext(), StudentRegistration.class);
-                    //startActivity(intent);
                 }
 
                 else if (userNumber == 1) {

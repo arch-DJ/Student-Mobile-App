@@ -22,10 +22,7 @@
             android:name=".StudentRegistration"
             android:label="Student Registration" />
         <activity android:name=".StudentMainActivity" />
-        <activity
-            android:name=".TeacherMainActivity"
-            android:label="@string/title_activity_teacher_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".TeacherMainActivity"></activity>
     </application>
 
 </manifest>
