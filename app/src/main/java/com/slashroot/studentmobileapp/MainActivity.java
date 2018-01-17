@@ -1,6 +1,7 @@
 package com.slashroot.studentmobileapp;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -95,12 +96,20 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Please enter your Aadhar Number to continue", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(MainActivity.this, "Fetching Data from Server", Toast.LENGTH_SHORT).show();
                     try {
                         String aadharNumber = input.getText().toString();
                         ServerConnect serverConnect = new ServerConnect();
                         String response = serverConnect.execute("http://lit-springs-26930.herokuapp.com/user/fetchData/aadhaar/" + aadharNumber, "GET").get();
-                        Log.e("response",response);
+                        int responseCode = Integer.parseInt(response.substring(0,3));
+                        if (responseCode == 200) {
+                            Intent intent = new Intent(getApplicationContext(), StudentRegistration.class);
+                            intent.putExtra("Student Data",response.substring(3));
+                            startActivity(intent);
+                        }
+
+                        else {
+                            Toast.makeText(MainActivity.this, "Aadhar number not found in Student Database", Toast.LENGTH_SHORT).show();
+                        }
 
                     } catch (Exception e) {
                         Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -129,6 +138,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class ServerConnect extends AsyncTask<String, Void, String> {
+        private ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            dialog = new ProgressDialog(MainActivity.this);
+            dialog.setMessage("Fetching Data from Server...");
+            dialog.setCancelable(false);
+            dialog.show();
+        }
 
         @Override
         protected String doInBackground(String... strings) {
@@ -166,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     bufferedReader.close();
                     response = stringBuffer.toString();
-                    return response;
+                    return ("200" + response);
                 }
 
                 else {
@@ -176,6 +194,13 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.e("Exception", e.getMessage());
                 return "Network Failure";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
             }
         }
     }
