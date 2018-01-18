@@ -22,7 +22,8 @@
             android:name=".StudentRegistration"
             android:label="Student Registration" />
         <activity android:name=".StudentMainActivity" />
-        <activity android:name=".TeacherMainActivity"></activity>
+        <activity android:name=".TeacherMainActivity" />
+        <activity android:name=".teacher_attendance"></activity>
     </application>
 
 </manifest>
