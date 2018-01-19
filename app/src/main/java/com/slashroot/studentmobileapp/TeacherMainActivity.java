@@ -42,24 +42,24 @@ public class TeacherMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_teacher_main);
 
 
-        ListView teacherlistView = findViewById(R.id.listView);
+        ListView teacherListView = findViewById(R.id.listView);
         final ArrayList<String> teacherList = new ArrayList<>();
 
         teacherList.add("Update Attendance");
 
         ArrayAdapter<String>ap = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,teacherList);
-        teacherlistView.setAdapter(ap);
+        teacherListView.setAdapter(ap);
 
 
-        teacherlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        teacherListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Log.i("Tapped",teacherList.get(position));
                 switch (teacherList.get(position)){
                     case "Update Attendance":
                     {
-                        Intent attIntent = new Intent(view.getContext(),teacher_attendance.class);
-                        startActivity(attIntent);
+                        Intent attendanceIntent = new Intent(view.getContext(),teacher_attendance.class);
+                        startActivity(attendanceIntent);
                     }
                     default:
                         break;
