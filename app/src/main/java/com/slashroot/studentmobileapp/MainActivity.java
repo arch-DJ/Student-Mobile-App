@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void verifyAadhar() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Please enter your Aadhar Number");
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                         if (responseCode == 200) {
                             Intent intent = new Intent(getApplicationContext(), StudentRegistration.class);
                             intent.putExtra("Student Data",response.substring(3));
+                            intent.putExtra("Aadhar", aadharNumber);
                             startActivity(intent);
                         }
 
