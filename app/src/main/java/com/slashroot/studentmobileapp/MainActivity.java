@@ -28,12 +28,6 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
     final String serverURL = "http://192.168.117.221:3000/enter/";
 
-    // Open student Activity (Temp)
-    public void launchStudentActivity(View view) {
-        Intent intent = new Intent(getApplicationContext(), TeacherMainActivity.class);
-        startActivity(intent);
-    }
-
     // Handle login
     public void onClickLogin(View view) {
         TextView usernameField = findViewById(R.id.loginId);

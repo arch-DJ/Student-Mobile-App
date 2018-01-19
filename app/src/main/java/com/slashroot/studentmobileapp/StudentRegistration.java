@@ -37,11 +37,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StudentRegistration extends AppCompatActivity {
+    // Declarations
     private static String name, roll, college, email, phone, branch, dob, address, gender, aadhar, loginId, password, confirmPassword, domain = "https://lit-springs-26930.herokuapp.com";
     private TextView loginTextView, passwordTextView, confirmPasswordTextView;
     private Button registerStudentButton;
     private CheckBox emailOtp, phoneOtp;
 
+    // Retrieve Student's Data from server
     void getStudentData() {
         Intent intent = getIntent();
         String studentData = intent.getStringExtra("Student Data");
@@ -82,7 +84,7 @@ public class StudentRegistration extends AppCompatActivity {
         branchTextView.setText("Branch - " + branch);
     }
 
-
+    // Check email format and if it is already registered
     public void verifyEmail(View view) {
         boolean checked = ((CheckBox) view).isChecked();
         EditText emailTextView = findViewById(R.id.email);
@@ -119,6 +121,7 @@ public class StudentRegistration extends AppCompatActivity {
         }
     }
 
+    // Check Mobile number format and if it is already registered
     public void verifyPhone(View view) {
         boolean checked = ((CheckBox) view).isChecked();
         EditText phoneTextView = findViewById(R.id.phoneNumber);
@@ -164,6 +167,7 @@ public class StudentRegistration extends AppCompatActivity {
         }
     }
 
+    // Ensure password follows the given pattern
     public boolean isValidPassword(final String password) {
         Pattern pattern;
         Matcher matcher;
@@ -177,6 +181,7 @@ public class StudentRegistration extends AppCompatActivity {
 
     }
 
+    // Check if user id to be registered already exists
     public void studentVerifyUserId(View view) {
         CheckBox checkBox = findViewById(R.id.studentVerifyUserIdCheckBox);
         boolean isChecked = checkBox.isChecked();
@@ -257,6 +262,7 @@ public class StudentRegistration extends AppCompatActivity {
         }
     }
 
+
     public void onClickStudentRegister(View view) {
         if (!emailOtp.isChecked() && !phoneOtp.isChecked()) {
             Toast.makeText(this, "Please select an option!", Toast.LENGTH_SHORT).show();
@@ -314,6 +320,8 @@ public class StudentRegistration extends AppCompatActivity {
 
                 Button possitiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
                 Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+                // Verify OTP
                 possitiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -353,7 +361,7 @@ public class StudentRegistration extends AppCompatActivity {
                     }
                 });
 
-
+                // Resend OTP
                 negativeButton.setOnClickListener(new View.OnClickListener() {
                     String url = "", json = "", responseCode = "";
                     JSONObject jsonObject = new JSONObject();
@@ -406,7 +414,7 @@ public class StudentRegistration extends AppCompatActivity {
         String url = domain + "/user-registration/student/register", responseCode = "";
         try {
             json.put("aadhaar", aadhar);
-            json.put("userName", loginId);
+            json.put("username", loginId);
             json.put("password", password);
             json.put("name", name);
             json.put("branch", branch);
@@ -427,17 +435,22 @@ public class StudentRegistration extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
         switch(responseCode) {
             case "200":
                 Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
                 break;
 
             case "400":
                 Toast.makeText(this, "Registration unsuccessful\n Student is already registered", Toast.LENGTH_LONG).show();
+                startActivity(intent);
                 break;
 
             default:
                 Toast.makeText(this, "Server error occured", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
                 break;
         }
 
@@ -453,6 +466,7 @@ public class StudentRegistration extends AppCompatActivity {
         getStudentData();
     }
 
+    // Responsible for connection to server, sending request with/without json, receiving response with/without json
     public class ServerConnect extends AsyncTask<String, Void, String> {
         private ProgressDialog dialog;
 
