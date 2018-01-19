@@ -94,7 +94,7 @@ public class StudentRegistration extends AppCompatActivity {
             if (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 ServerConnect serverConnect = new ServerConnect();
                 try {
-                    String responseCode = serverConnect.execute(domain + "/user-check/isuniqueEmail/" + email).get().substring(0, 3);
+                    String responseCode = serverConnect.execute(domain + "/user/check/email/" + email).get().substring(0, 3);
                     if (responseCode.equals("200")){
                         emailTextView.setEnabled(false);
                         ((CheckBox) view).setEnabled(false);
@@ -132,7 +132,7 @@ public class StudentRegistration extends AppCompatActivity {
             if (!TextUtils.isEmpty(phone) && Patterns.PHONE.matcher(phone).matches() && phone.length() == 10) {
                 ServerConnect serverConnect = new ServerConnect();
                 try {
-                    String responseCode = serverConnect.execute(domain + "/user-check/isuniquePhone/" + phone).get().substring(0, 3);
+                    String responseCode = serverConnect.execute(domain + "/user/check/phone/" + phone).get().substring(0, 3);
                     if (responseCode.equals("200")){
                         phoneTextView.setEnabled(false);
                         loginTextView.setVisibility(View.VISIBLE);
@@ -225,7 +225,7 @@ public class StudentRegistration extends AppCompatActivity {
             else {
                 ServerConnect serverConnect = new ServerConnect();
                 try {
-                    String responseCode = serverConnect.execute(domain + "/user-check/isuniqueUsername/" + loginId).get().substring(0, 3);
+                    String responseCode = serverConnect.execute(domain + "/user/check/username/" + loginId).get().substring(0, 3);
                     if (responseCode.equals("200")) {
                         loginTextView.setEnabled(false);
                         passwordTextView.setEnabled(false);
@@ -411,7 +411,7 @@ public class StudentRegistration extends AppCompatActivity {
 
     public void finalSubmission() {
         JSONObject json = new JSONObject();
-        String url = domain + "/user-registration/student/register", responseCode = "";
+        String url = domain + "/user/registration/student/", responseCode = "";
         try {
             json.put("aadhaar", aadhar);
             json.put("username", loginId);
