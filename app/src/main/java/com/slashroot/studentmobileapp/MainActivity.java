@@ -83,16 +83,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Please enter your Aadhar Number to continue", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    try {
-                        aadharNumber = input.getText().toString();
-                        ServerConnect serverConnect = new ServerConnect();
-                        serverConnect.execute(domain + "/user/fetchData/aadhaar/" + aadharNumber, "GET", "StudentRegistration");
-
-                    } catch (Exception e) {
-                        Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
-                }                
+                    aadharNumber = input.getText().toString();
+                    ServerConnect serverConnect = new ServerConnect();
+                    serverConnect.execute(domain + "/user/check/aadhaar/" + aadharNumber, "POST", "UnregisteredAadhaar");
+                }
             }
         });
         alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -103,6 +97,11 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.setView(input);
         alertDialog.show();
+    }
+
+    public void getStudentDetailsFromAadhaar() {
+        ServerConnect serverConnect = new ServerConnect();
+        serverConnect.execute(domain + "/user/fetchData/aadhaar/" + aadharNumber, "GET", "StudentRegistration");
     }
 
 
@@ -179,13 +178,31 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String response) {
+            String responseCode = response.substring(0, 3);
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
 
             switch(operation) {
+                case "UnregisteredAadhaar":
+                    switch (responseCode) {
+                        case "200":
+                            getStudentDetailsFromAadhaar();
+                            break;
+
+                        case "400":
+                            Toast.makeText(MainActivity.this, "This aadhaar number is already registered!", Toast.LENGTH_SHORT).show();
+                            break;
+
+                        default:
+                            Toast.makeText(MainActivity.this, "Server error", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                    break;
+
+
+
                 case "StudentRegistration":
-                    String responseCode = response.substring(0, 3);
                     switch (responseCode) {
                         case "200":
                             Intent intent = new Intent(getApplicationContext(), StudentRegistration.class);
@@ -194,10 +211,10 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                             break;
                         case "400":
-                            Toast.makeText(MainActivity.this, "Aadhar number not found in Student Database", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Aadhaar number not found in Student Central Database", Toast.LENGTH_SHORT).show();
                             break;
                         default:
-                            Toast.makeText(MainActivity.this, "No internet", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Server error", Toast.LENGTH_SHORT).show();
                             break;
                     }
                     break;

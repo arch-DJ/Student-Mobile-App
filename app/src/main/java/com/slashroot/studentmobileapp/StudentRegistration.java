@@ -492,7 +492,7 @@ public class StudentRegistration extends AppCompatActivity {
                             Toast.makeText(StudentRegistration.this, "Wrong OTP entered", Toast.LENGTH_SHORT).show();
                             break;
                         default:
-                            Toast.makeText(StudentRegistration.this, responseCode, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(StudentRegistration.this, "Server error", Toast.LENGTH_SHORT).show();
                             break;
                     }
                     break;
@@ -518,13 +518,8 @@ public class StudentRegistration extends AppCompatActivity {
                             startActivity(intent);
                             break;
 
-                        case "400":
-                            Toast.makeText(StudentRegistration.this, "Registration unsuccessful\nStudent is already registered!", Toast.LENGTH_LONG).show();
-                            startActivity(intent);
-                            break;
-
                         default:
-                            Toast.makeText(StudentRegistration.this, "Server error occurred", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(StudentRegistration.this, "Server error", Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                             break;
                     }
