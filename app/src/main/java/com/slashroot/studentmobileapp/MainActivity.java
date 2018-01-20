@@ -26,7 +26,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
-    final String serverURL = "http://192.168.117.221:3000/enter/";
+    static String aadharNumber = "", domain = "https://lit-springs-26930.herokuapp.com";
 
     // Handle login
     public void onClickLogin(View view) {
@@ -44,16 +44,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else {
-            ServerConnect serverConnect = new ServerConnect();
-            try {
-                JSONObject json = new JSONObject();
-                json.put("username", username);
-                json.put("password", password);
-                String response = serverConnect.execute(serverURL, json.toString()).get();
-                Toast.makeText(this, response, Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                Toast.makeText(this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
-            }
 
         }
     }
@@ -94,20 +84,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     try {
-                        String aadharNumber = input.getText().toString();
+                        aadharNumber = input.getText().toString();
                         ServerConnect serverConnect = new ServerConnect();
-                        String response = serverConnect.execute("http://lit-springs-26930.herokuapp.com/user/fetchData/aadhaar/" + aadharNumber, "GET").get();
-                        int responseCode = Integer.parseInt(response.substring(0,3));
-                        if (responseCode == 200) {
-                            Intent intent = new Intent(getApplicationContext(), StudentRegistration.class);
-                            intent.putExtra("Student Data",response.substring(3));
-                            intent.putExtra("Aadhar", aadharNumber);
-                            startActivity(intent);
-                        }
-
-                        else {
-                            Toast.makeText(MainActivity.this, "Aadhar number not found in Student Database", Toast.LENGTH_SHORT).show();
-                        }
+                        serverConnect.execute(domain + "/user/fetchData/aadhaar/" + aadharNumber, "GET", "StudentRegistration");
 
                     } catch (Exception e) {
                         Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -137,19 +116,22 @@ public class MainActivity extends AppCompatActivity {
 
     public class ServerConnect extends AsyncTask<String, Void, String> {
         private ProgressDialog dialog;
+        private String operation = "";
 
         @Override
         protected void onPreExecute() {
             dialog = new ProgressDialog(MainActivity.this);
-            dialog.setMessage("Fetching Data from Server...");
+            dialog.setMessage("Please wait...");
             dialog.setCancelable(false);
             dialog.show();
         }
 
         @Override
         protected String doInBackground(String... strings) {
+            operation = strings[2];
             URL url;
             HttpURLConnection urlConnection;
+
             try {
                 // Opening Connection
                 url = new URL(strings[0]);
@@ -159,9 +141,9 @@ public class MainActivity extends AppCompatActivity {
                 urlConnection.setRequestMethod(requestMethod);
                 urlConnection.connect();
 
-                if (strings.length > 2) {
+                if (strings.length > 3) {
                     // Sending login credentials
-                    String json = strings[2];
+                    String json = strings[3];
                     OutputStream outputStream = urlConnection.getOutputStream();
                     OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
                     outputStreamWriter.write(json);
@@ -196,9 +178,32 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String response) {
             if (dialog.isShowing()) {
                 dialog.dismiss();
+            }
+
+            switch(operation) {
+                case "StudentRegistration":
+                    String responseCode = response.substring(0, 3);
+                    switch (responseCode) {
+                        case "200":
+                            Intent intent = new Intent(getApplicationContext(), StudentRegistration.class);
+                            intent.putExtra("Student Data", response.substring(3));
+                            intent.putExtra("Aadhar", aadharNumber);
+                            startActivity(intent);
+                            break;
+                        case "400":
+                            Toast.makeText(MainActivity.this, "Aadhar number not found in Student Database", Toast.LENGTH_SHORT).show();
+                            break;
+                        default:
+                            Toast.makeText(MainActivity.this, "No internet", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                    break;
+
+                default: break;
+
             }
         }
     }

@@ -12,11 +12,13 @@
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
@@ -32,63 +34,64 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:hint="Name"
-                android:textColor="@android:color/background_light"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="italic" />
+                android:textColor="@android:color/background_light" />
 
             <TextView
-                android:id="@+id/collegeName"
+                android:id="@+id/studentCollegeName"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:hint="College Name"
-                android:textColor="@android:color/background_light"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="italic" />
+                android:textColor="@android:color/background_light" />
 
             <TextView
-                android:id="@+id/branch"
+                android:id="@+id/studentBranch"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:hint="Branch"
-                android:textColor="@android:color/background_light"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="italic" />
+                android:textColor="@android:color/background_light" />
 
             <TextView
-                android:id="@+id/roll"
+                android:id="@+id/studentBatch"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:hint="Batch"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/background_light" />
+
+            <TextView
+                android:id="@+id/studentRoll"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:hint="Roll Number"
-                android:textColor="@android:color/background_light"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="italic" />
+                android:textColor="@android:color/background_light" />
 
             <TextView
-                android:id="@+id/gender"
+                android:id="@+id/studentGender"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:hint="Gender"
-                android:textColor="@android:color/background_light"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="italic" />
+                android:textColor="@android:color/background_light" />
 
             <TextView
-                android:id="@+id/dob"
+                android:id="@+id/studentDob"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:hint="Date Of Birth"
-                android:textColor="@android:color/background_light"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="italic" />
+                android:textColor="@android:color/background_light" />
 
             <TextView
-                android:id="@+id/address"
+                android:id="@+id/studentAddress"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
                 android:hint="Address"
-                android:textColor="@android:color/background_light"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="italic" />
+                android:textColor="@android:color/background_light" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -96,15 +99,15 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/email"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/studentEmail"
+                    android:layout_width="265dp"
                     android:layout_height="wrap_content"
                     android:hint="Email Address"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textStyle="italic" />
+                    android:inputType="textEmailAddress"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <CheckBox
-                    android:id="@+id/emailCheckBox"
+                    android:id="@+id/studentEmailCheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -119,16 +122,15 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/phoneNumber"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/studentPhoneNumber"
+                    android:layout_width="265dp"
                     android:layout_height="wrap_content"
                     android:hint="Phone Number"
-                    android:inputType="number"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textStyle="italic" />
+                    android:inputType="phone"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <CheckBox
-                    android:id="@+id/phoneCheckBox"
+                    android:id="@+id/studentPhoneCheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -139,35 +141,31 @@
 
 
             <EditText
-                android:id="@+id/loginIdRegistration"
+                android:id="@+id/studentLoginIdRegistration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Login ID"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:visibility="gone"
-                android:textStyle="italic" />
-
+                android:visibility="gone" />
 
 
             <EditText
-                android:id="@+id/passwordRegistration"
+                android:id="@+id/studentPasswordRegistration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:visibility="gone"
-                android:textStyle="italic" />
+                android:visibility="gone" />
 
             <EditText
-                android:id="@+id/confirmPasswordRegistration"
+                android:id="@+id/studentConfirmPasswordRegistration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:visibility="gone"
-                android:textStyle="italic" />
+                android:visibility="gone" />
 
             <CheckBox
                 android:id="@+id/studentVerifyUserIdCheckBox"
@@ -182,6 +180,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <CheckBox
                     android:id="@+id/studentRegistrationEmailOtpCheckbox"
                     android:layout_width="wrap_content"
@@ -190,7 +189,8 @@
                     android:onClick="selectEmailOtp"
                     android:text="Send OTP to Email"
                     android:visibility="gone" />
-                     />
+                />
+
                 <CheckBox
                     android:id="@+id/studentRegistrationPhoneOtpCheckbox"
                     android:layout_width="wrap_content"
@@ -199,22 +199,46 @@
                     android:onClick="selectPhoneOtp"
                     android:text="Send OTP to Phone"
                     android:visibility="gone" />
-                     />
+                />
             </LinearLayout>
+
             <Button
                 android:id="@+id/registerStudentButton"
                 android:layout_width="220dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
-                android:text="Register"
                 android:onClick="onClickStudentRegister"
+                android:text="Register"
                 android:visibility="gone" />
 
 
         </LinearLayout>
 
 
-
-
     </ScrollView>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <ProgressBar
+        android:id="@+id/studentRegistrationBusy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:indeterminateOnly="true"
+        android:keepScreenOn="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="1.0" />
+
+
 </android.support.constraint.ConstraintLayout>
