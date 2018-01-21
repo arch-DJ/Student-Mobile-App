@@ -60,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 else if (userNumber == 1) {
-
+                    Intent intent = new Intent(getApplicationContext(), TeacherRegistration.class);
+                    startActivity(intent);
                 }
 
                 else {
