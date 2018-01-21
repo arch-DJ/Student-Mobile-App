@@ -65,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 else {
-
+                    Intent intent = new Intent(getApplicationContext(), ParentRegistration.class);
+                    startActivity(intent);
                 }
             }
         });

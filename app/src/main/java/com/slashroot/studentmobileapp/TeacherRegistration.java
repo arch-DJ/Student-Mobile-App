@@ -1,5 +1,6 @@
 package com.slashroot.studentmobileapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -123,7 +124,7 @@ public class TeacherRegistration extends AppCompatActivity {
                                    universities[i] = jsonArray.getString(i);
                                }
                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                                       TeacherRegistration.this, android.R.layout.simple_dropdown_item_1line, universities);
+                                       TeacherRegistration.this, android.R.layout.simple_list_item_1, universities);
 
                                AutoCompleteTextView autoCompleteTextView = findViewById(R.id.teacherUniversity);
                                autoCompleteTextView.setThreshold(1);
@@ -136,8 +137,16 @@ public class TeacherRegistration extends AppCompatActivity {
                            break;
                        default:
                            Toast.makeText(TeacherRegistration.this, "Server Error", Toast.LENGTH_SHORT).show();
+                           Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                           startActivity(intent);
                    }
                    break;
+
+
+
+
+
+
            }
 
         }
