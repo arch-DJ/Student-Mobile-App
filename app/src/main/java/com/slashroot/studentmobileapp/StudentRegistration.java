@@ -257,6 +257,7 @@ public class StudentRegistration extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String url;
                         JSONObject json = new JSONObject();
+
                         try {
                             json.put("otp", input.getText().toString());
                         } catch (JSONException e) {
@@ -352,7 +353,6 @@ public class StudentRegistration extends AppCompatActivity {
 
     // Responsible for connection to server, sending request with/without json, receiving response with/without json
     public class ServerConnect extends AsyncTask<String, Void, String> {
-        private ProgressDialog dialog;
         private String operation = "";
         private ProgressBar busyIndicator = findViewById(R.id.studentRegistrationBusy);
 

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Handle login
     public void onClickLogin(View view) {
+        String url = domain + "/user/login";
         TextView usernameField = findViewById(R.id.loginId);
         String username = usernameField.getText().toString();
         TextView passwordField = findViewById(R.id.password);
@@ -44,7 +46,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else {
-
+            ServerConnect serverConnect = new ServerConnect();
+            JSONObject json = new JSONObject();
+            try {
+                json.put("username", username);
+                json.put("password", password);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            serverConnect.execute(url,"POST", "Login", json.toString());
         }
     }
 
@@ -185,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
 
-            switch(operation) {
+            switch (operation) {
                 case "UnregisteredAadhaar":
                     switch (responseCode) {
                         case "200":
@@ -215,6 +225,39 @@ public class MainActivity extends AppCompatActivity {
                         case "400":
                             Toast.makeText(MainActivity.this, "Aadhaar number not found in Student Central Database", Toast.LENGTH_SHORT).show();
                             break;
+                        default:
+                            Toast.makeText(MainActivity.this, "Server error", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                    break;
+
+
+                case "Login":
+                    switch (responseCode) {
+                        case "200":
+                            String userType = response.substring(4, response.length() - 1);
+                            switch (userType) {
+                                case "student": {
+                                    Intent intent = new Intent(getApplicationContext(), StudentMainActivity.class);
+                                    startActivity(intent);
+                                    break;
+                                }
+                                case "teacher": {
+                                    Intent intent = new Intent(getApplicationContext(), TeacherMainActivity.class);
+                                    startActivity(intent);
+                                    break;
+                                }
+                                default:
+                                    //intent = new Intent(getApplicationContext(), ParentMainActivity.class);
+                                    //startActivity(intent);
+                                    break;
+                            }
+                            break;
+
+                        case "400":
+                            Toast.makeText(MainActivity.this, "Wrong username or password!", Toast.LENGTH_SHORT).show();
+                            break;
+
                         default:
                             Toast.makeText(MainActivity.this, "Server error", Toast.LENGTH_SHORT).show();
                             break;
