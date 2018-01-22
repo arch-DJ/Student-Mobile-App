@@ -187,7 +187,7 @@ public class StudentRegistration extends AppCompatActivity {
             }
 
             else if (!isValidPassword(password)) {
-                Toast.makeText(this, "Password should be atleast 8 characters long, alphanumeric and contain one special character with no white spaces", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Password should be atleast 8 characters long, alphanumeric and contain one special character", Toast.LENGTH_LONG).show();
                 checkBox.setChecked(false);
             }
 
@@ -249,6 +249,7 @@ public class StudentRegistration extends AppCompatActivity {
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         final AlertDialog dialog = new AlertDialog.Builder(this)
                 .setView(input)
+                .setCancelable(false)
                 .setMessage("Please enter the OTP received")
                 .setNegativeButton("Resend", null)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {

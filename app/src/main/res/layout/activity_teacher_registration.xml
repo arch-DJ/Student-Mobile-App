@@ -36,53 +36,6 @@
                 android:hint="Name"
                 android:inputType="textPersonName" />
 
-            <AutoCompleteTextView
-                android:id="@+id/teacherUniversitySearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="University"
-                android:inputType="textPersonName" />
-
-            <TextView
-                android:id="@+id/teacherUniversity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:maxLines="2"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:scrollHorizontally="false"
-                android:text=""
-                android:visibility="gone" />
-
-            <AutoCompleteTextView
-                android:id="@+id/teacherCollegeSearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="College"
-                android:inputType="textPersonName" />
-
-            <TextView
-                android:id="@+id/teacherCollege"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:maxLines="2"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:scrollHorizontally="false"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/teacherDept"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Department"
-                android:inputType="textPersonName" />
-
             <TextView
                 android:id="@+id/teacherGenderSelection"
                 android:layout_width="match_parent"
@@ -142,30 +95,164 @@
             </LinearLayout>
 
             <EditText
-                android:id="@+id/teacherAadhaar"
+                android:id="@+id/teacherAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Aadhaar number"
-                android:inputType="number" />
+                android:maxLines="4"
+                android:hint="Address"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scrollHorizontally="false" />
 
-
-            <EditText
-                android:id="@+id/teacherEmail"
+            <AutoCompleteTextView
+                android:id="@+id/teacherUniversitySearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Email"
-                android:inputType="textEmailAddress" />
+                android:hint="University"
+                android:inputType="textPersonName" />
 
-
-            <EditText
-                android:id="@+id/teacherPhone"
+            <TextView
+                android:id="@+id/teacherUniversity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Phone Number"
-                android:inputType="phone" />
+                android:maxLines="2"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scrollHorizontally="false"
+                android:text=""
+                android:visibility="gone" />
+
+            <AutoCompleteTextView
+                android:id="@+id/teacherCollegeSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="College"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/teacherCollege"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:maxLines="2"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scrollHorizontally="false"
+                android:visibility="gone" />
+
+            <AutoCompleteTextView
+                android:id="@+id/teacherStreamSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Stream (Example - Engineering)"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/teacherStream"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:maxLines="2"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scrollHorizontally="false"
+                android:visibility="gone" />
+
+            <AutoCompleteTextView
+                android:id="@+id/teacherDeptSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Department"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/teacherDept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:maxLines="2"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scrollHorizontally="false"
+                android:visibility="gone" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/teacherAadhaar"
+                    android:layout_width="265dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Aadhaar Number"
+                    android:inputType="number"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <CheckBox
+                    android:id="@+id/teacherAadhaarCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="verifyAadhaar"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/teacherEmail"
+                    android:layout_width="265dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <CheckBox
+                    android:id="@+id/teacherEmailCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="verifyEmail"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/teacherPhoneNumber"
+                    android:layout_width="265dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone Number"
+                    android:inputType="phone"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <CheckBox
+                    android:id="@+id/teacherPhoneCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="verifyPhone"
+                    android:visibility="visible" />
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/teacherUserid"
@@ -190,6 +277,45 @@
                 android:ems="10"
                 android:hint="Confirm Password"
                 android:inputType="textPassword" />
+
+            <CheckBox
+                android:id="@+id/teacherVerifyUserIdCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="teacherVerifyUserId"
+                android:layout_weight="1"
+
+                android:text="Confirm UserID and Password"  />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/teacherEmailOtp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Send OTP to email" />
+
+                <RadioButton
+                    android:id="@+id/teacherPhoneOtp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Send OTP to phone" />
+
+
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/registerTeacherButton"
+                android:layout_width="220dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="30dp"
+                android:onClick="onClickRegister"
+                android:text="Register"  />
 
 
         </LinearLayout>
