@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -123,6 +124,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_AppCompat);
         setContentView(R.layout.activity_main);
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("UserDetails", 0);
+        if (sharedPreferences.getString("userType", "").equals("student")) {
+            Intent intent = new Intent(getApplicationContext(), StudentMainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        else if (sharedPreferences.getString("userType", "").equals("teacher")) {
+            Intent intent = new Intent(getApplicationContext(), TeacherMainActivity.class);
+            Toast.makeText(this, "Welcome " + sharedPreferences.getString("name", "") + "!", Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+        }
+
+        else if (sharedPreferences.getString("userType", "").equals("parent")) {
+            //Intent intent = new Intent(getApplicationContext(), ParentMainActivity.class);
+            Toast.makeText(this, "Welcome " + sharedPreferences.getString("name", "") + "!", Toast.LENGTH_SHORT).show();
+            //startActivity(intent);
+        }
     }
 
     public class ServerConnect extends AsyncTask<String, Void, String> {
@@ -235,23 +254,48 @@ public class MainActivity extends AppCompatActivity {
                 case "Login":
                     switch (responseCode) {
                         case "200":
-                            String userType = response.substring(4, response.length() - 1);
-                            switch (userType) {
-                                case "student": {
-                                    Intent intent = new Intent(getApplicationContext(), StudentMainActivity.class);
-                                    startActivity(intent);
-                                    break;
+                            String userType = "";
+                            try {
+                                JSONObject json = new JSONObject(response.substring(3));
+                                userType = json.getString("usertype");
+                                switch (userType) {
+                                    case "student": {
+                                        Intent intent = new Intent(getApplicationContext(), StudentMainActivity.class);
+                                        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("UserDetails", 0);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putString("userType", userType);
+                                        editor.putString("name", json.getString("name"));
+                                        editor.putString("userName", json.getString("userName"));
+                                        editor.putString("gender", json.getString("gender"));
+                                        editor.putString("rollNumber", json.getString("rollNumber"));
+                                        editor.putString("dob", json.getString("dob"));
+                                        editor.putString("college", json.getString("college"));
+                                        editor.putString("branch", json.getString("branch"));
+                                        editor.putString("batch", json.getString("batch"));
+                                        editor.putString("address", json.getString("address"));
+                                        editor.putString("email", json.getString("email"));
+                                        editor.putString("aadhaar", json.getString("aadhaar"));
+                                        editor.putString("phone", json.getString("phone"));
+                                        editor.apply();
+                                        Toast.makeText(MainActivity.this, "Welcome " + json.getString("name") + "!", Toast.LENGTH_SHORT).show();
+                                        startActivity(intent);
+                                        break;
+                                    }
+                                    case "teacher": {
+                                        Intent intent = new Intent(getApplicationContext(), TeacherMainActivity.class);
+                                        startActivity(intent);
+                                        break;
+                                    }
+                                    default:
+                                        //intent = new Intent(getApplicationContext(), ParentMainActivity.class);
+                                        //startActivity(intent);
+                                        break;
                                 }
-                                case "teacher": {
-                                    Intent intent = new Intent(getApplicationContext(), TeacherMainActivity.class);
-                                    startActivity(intent);
-                                    break;
-                                }
-                                default:
-                                    //intent = new Intent(getApplicationContext(), ParentMainActivity.class);
-                                    //startActivity(intent);
-                                    break;
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
+
+
                             break;
 
                         case "400":
