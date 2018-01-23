@@ -12,7 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,9 +29,8 @@
         <activity android:name=".teacher_attendance" />
         <activity
             android:name=".ParentRegistration"
-            android:label="Parent Registration"
-            />
-
+            android:label="Parent Registration" />
+        <activity android:name=".StudentAttendance"></activity>
     </application>
 
 </manifest>
