@@ -135,12 +135,14 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), TeacherMainActivity.class);
             Toast.makeText(this, "Welcome " + sharedPreferences.getString("name", "") + "!", Toast.LENGTH_SHORT).show();
             startActivity(intent);
+            finish();
         }
 
         else if (sharedPreferences.getString("userType", "").equals("parent")) {
             //Intent intent = new Intent(getApplicationContext(), ParentMainActivity.class);
             Toast.makeText(this, "Welcome " + sharedPreferences.getString("name", "") + "!", Toast.LENGTH_SHORT).show();
             //startActivity(intent);
+            finish();
         }
     }
 
@@ -279,16 +281,19 @@ public class MainActivity extends AppCompatActivity {
                                         editor.apply();
                                         Toast.makeText(MainActivity.this, "Welcome " + json.getString("name") + "!", Toast.LENGTH_SHORT).show();
                                         startActivity(intent);
+                                        finish();
                                         break;
                                     }
                                     case "teacher": {
                                         Intent intent = new Intent(getApplicationContext(), TeacherMainActivity.class);
                                         startActivity(intent);
+                                        finish();
                                         break;
                                     }
                                     default:
                                         //intent = new Intent(getApplicationContext(), ParentMainActivity.class);
                                         //startActivity(intent);
+                                        finish();
                                         break;
                                 }
                             } catch (JSONException e) {

@@ -435,7 +435,25 @@ public class TeacherRegistration extends AppCompatActivity {
     public void finalSubmission() {
         JSONObject json = new JSONObject();
         String url = domain + "/user/registration/teacher/";
+        try {
+            json.put("aadhaar", teacherAadhaar.getText().toString());
+            json.put("username", teacherUsername.getText().toString());
+            json.put("password", teacherPassword.getText().toString());
+            json.put("name", teacherName.getText().toString());
+            json.put("college", teacherCollege.getText().toString());
+            json.put("department", teacherDepartment.getText().toString());
+            json.put("gender", gender);
+            json.put("dob", teacherDob.getText().toString());
+            json.put("email", teacherEmail.getText().toString());
+            json.put("phone", teacherMobile.getText().toString());
+            json.put("address", teacherAddress.getText().toString());
+            json.put("university", teacherUniversity.getText().toString());
+            json.put("stream", teacherStream.getText().toString());
+            Log.e("json", json.toString());
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ServerConnect serverConnect = new ServerConnect();
         serverConnect.execute(url, "POST", "FinalRegistration", json.toString());
     }
@@ -818,8 +836,7 @@ public class TeacherRegistration extends AppCompatActivity {
                case "VerifyOtp":
                    switch (responseCode) {
                        case "200":
-                           Toast.makeText(TeacherRegistration.this, "Done!!", Toast.LENGTH_SHORT).show();
-                           //finalSubmission();
+                           finalSubmission();
                            break;
                        case "400":
                            Toast.makeText(TeacherRegistration.this, "Wrong OTP entered", Toast.LENGTH_SHORT).show();
@@ -854,10 +871,6 @@ public class TeacherRegistration extends AppCompatActivity {
                            break;
                    }
                    break;
-
-
-
-
            }
 
         }
