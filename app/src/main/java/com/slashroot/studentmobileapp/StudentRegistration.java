@@ -146,7 +146,7 @@ public class StudentRegistration extends AppCompatActivity {
         Pattern pattern;
         Matcher matcher;
 
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=_!]).{6,}$";
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#*$%^&+=_!]).{6,}$";
 
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);

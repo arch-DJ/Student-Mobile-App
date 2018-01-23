@@ -232,7 +232,7 @@ public class TeacherRegistration extends AppCompatActivity {
         Pattern pattern;
         Matcher matcher;
 
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=_!]).{6,}$";
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&*+=_!]).{6,}$";
 
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);
@@ -567,7 +567,7 @@ public class TeacherRegistration extends AppCompatActivity {
                                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                                    teacherUniversity.setVisibility(View.VISIBLE);
                                    String selected = (String) adapterView.getItemAtPosition(position);
-                                   teacherUniversity.setText("University - " +  selected);
+                                   teacherUniversity.setText(selected);
                                    teacherCollegeSearch.setText("");
                                    teacherCollege.setText("");
                                    teacherStreamSearch.setText("");
@@ -610,7 +610,7 @@ public class TeacherRegistration extends AppCompatActivity {
                                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                                        teacherCollege.setVisibility(View.VISIBLE);
                                        String selected = (String) adapterView.getItemAtPosition(position);
-                                       teacherCollege.setText("College - " +  selected);
+                                       teacherCollege.setText(selected);
                                        teacherStreamSearch.setText("");
                                        teacherStream.setText("");
                                        teacherDepartmentSearch.setText("");
@@ -657,7 +657,7 @@ public class TeacherRegistration extends AppCompatActivity {
                                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                                        teacherStream.setVisibility(View.VISIBLE);
                                        String selected = (String) adapterView.getItemAtPosition(position);
-                                       teacherStream.setText("Stream - " +  selected);
+                                       teacherStream.setText(selected);
                                        teacherDepartmentSearch.setText("");
                                        teacherDepartment.setText("");
                                        fetchDepartments(selected);
@@ -701,7 +701,7 @@ public class TeacherRegistration extends AppCompatActivity {
                                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                                        teacherDepartment.setVisibility(View.VISIBLE);
                                        String selected = (String) adapterView.getItemAtPosition(position);
-                                       teacherDepartment.setText("Department - " +  selected);
+                                       teacherDepartment.setText(selected);
                                    }
                                });
 
