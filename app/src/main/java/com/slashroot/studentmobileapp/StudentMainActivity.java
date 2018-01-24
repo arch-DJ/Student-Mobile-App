@@ -1,6 +1,7 @@
 package com.slashroot.studentmobileapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,8 +35,19 @@ public class StudentMainActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.logout:
+            {
                 Log.i("Tapped","Log out");
+                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("UserDetails",0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+                Intent mainActivity = new Intent(this,MainActivity.class);
+                startActivity(mainActivity);
+                //finish();
                 return true;
+
+            }
+
             default:
                 return false;
 
