@@ -241,7 +241,6 @@ public class TeacherRegistration extends AppCompatActivity {
     }
 
     public void teacherVerifyUserId(View view) {
-        boolean isChecked = loginCheckBox.isChecked();
         String loginId = teacherUsername.getText().toString();
         String password = teacherPassword.getText().toString();
         String confirmPassword = teacherConfirmPassword.getText().toString();
@@ -336,7 +335,7 @@ public class TeacherRegistration extends AppCompatActivity {
         }
 
         else {
-            String url = "";
+            String url;
             if (teacherMaleButton.isChecked()) {
                 gender = "Male";
             }
