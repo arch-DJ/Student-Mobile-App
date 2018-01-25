@@ -117,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
         serverConnect.execute(domain + "/user/fetchData/aadhaar/" + aadharNumber, "GET", "StudentRegistration");
     }
 
+    public void onClickForgotPassword(View view) {
+        Intent intent = new Intent(getApplicationContext(), ForgotPassword.class);
+        startActivity(intent);
+    }
+
 
 
     @Override
