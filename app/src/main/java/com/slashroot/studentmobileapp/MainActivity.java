@@ -30,6 +30,11 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
     static String aadharNumber = "", domain = "https://lit-springs-26930.herokuapp.com";
 
+    public void temp(View view) {
+        Intent intent = new Intent(getApplicationContext(), StudentAttendance.class);
+        startActivity(intent);
+    }
+
     // Handle login
     public void onClickLogin(View view) {
         String url = domain + "/user/login";
@@ -149,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 
     public class ServerConnect extends AsyncTask<String, Void, String> {
         private ProgressDialog dialog;
