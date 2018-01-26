@@ -66,7 +66,6 @@ public class ParentRegistration extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.Theme_AppCompat);
         setContentView(R.layout.activity_parent_registration);
         EditText email = findViewById(R.id.parentEmail);
 

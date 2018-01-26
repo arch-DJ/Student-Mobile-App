@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.Theme_AppCompat);
         setContentView(R.layout.activity_main);
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("UserDetails", 0);
         if (sharedPreferences.getString("userType", "").equals("student")) {

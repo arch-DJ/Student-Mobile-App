@@ -3,10 +3,8 @@ package com.slashroot.studentmobileapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -18,10 +16,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,12 +26,14 @@ import java.io.UnsupportedEncodingException;
 
 
 public class ForgotPassword extends AppCompatActivity {
+    // UI elements declaration
     TextView usernameTextView, sendOtpTo, otpTextView, passwordTextView, confirmPasswordTextView;
     RadioButton emailRadioButton, mobileRadioButton;
     Button sendOtpButton, submitOtpButton, resendOtpButton, changePasswordButton, confirmUsernameButton;
     String username, email, phone, otpType, domain = "https://lit-springs-26930.herokuapp.com";
     ProgressBar busyIndicator;
 
+    // Assigning UI elements to our variables
     public void initialize() {
         usernameTextView = findViewById(R.id.forgotPasswordUsername);
         emailRadioButton = findViewById(R.id.forgotPasswordEmail);
@@ -52,6 +50,8 @@ public class ForgotPassword extends AppCompatActivity {
         busyIndicator = findViewById(R.id.forgotPasswordBusy);
     }
 
+
+    // Confirm validity of entered username
     public void confirmUsername(View view) {
         username = usernameTextView.getText().toString();
 
@@ -66,6 +66,8 @@ public class ForgotPassword extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        // Requesting email and mobile number associated with the provided username if username is valid
         JsonObjectRequest jsonObjectRequest =
                 new JsonObjectRequest(Request.Method.POST, url, json, new Response.Listener<JSONObject>() {
                     @Override
@@ -113,6 +115,7 @@ public class ForgotPassword extends AppCompatActivity {
 
     }
 
+    // Method which requests server to send OTP to email/mobile
     public void onClickSendOtp(View view) {
         if (!emailRadioButton.isChecked() && !mobileRadioButton.isChecked()) {
             Toast.makeText(this, "Please select an option!", Toast.LENGTH_SHORT).show();
@@ -163,6 +166,7 @@ public class ForgotPassword extends AppCompatActivity {
         }
     }
 
+    // Method which requests server to validate entered OTP
     public void onClickSubmitOtp(View view) {
         String otp = otpTextView.getText().toString();
 
@@ -225,6 +229,7 @@ public class ForgotPassword extends AppCompatActivity {
         VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 
+    // Method which requests server to resend OTP to email/mobile
     public void onClickResendOtp(View view) {
         String url;
         JSONObject jsonObject = new JSONObject();
@@ -271,6 +276,7 @@ public class ForgotPassword extends AppCompatActivity {
         VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 
+    // Method which validates newly entered password with specified rules and if validated it requests server to reset password
     public void onClickChangePassword(View view) {
         String username = usernameTextView.getText().toString();
         String password = passwordTextView.getText().toString();
@@ -347,9 +353,7 @@ public class ForgotPassword extends AppCompatActivity {
         }
     }
 
-
-
-
+    // Method which displays server error message to user and jumps back to Main Activity
     public void serverError() {
         Toast.makeText(ForgotPassword.this, "Server error!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);

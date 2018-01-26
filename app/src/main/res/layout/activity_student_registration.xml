@@ -35,7 +35,7 @@
                 android:layout_height="44dp"
                 android:hint="Name"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/background_light" />
+                 />
 
             <TextView
                 android:id="@+id/studentCollegeName"
@@ -43,7 +43,7 @@
                 android:layout_height="44dp"
                 android:hint="College Name"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/background_light" />
+                 />
 
             <TextView
                 android:id="@+id/studentBranch"
@@ -51,7 +51,7 @@
                 android:layout_height="44dp"
                 android:hint="Branch"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/background_light" />
+                />
 
             <TextView
                 android:id="@+id/studentBatch"
@@ -59,7 +59,7 @@
                 android:layout_height="44dp"
                 android:hint="Batch"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/background_light" />
+                 />
 
             <TextView
                 android:id="@+id/studentRoll"
@@ -67,7 +67,7 @@
                 android:layout_height="44dp"
                 android:hint="Roll Number"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/background_light" />
+                 />
 
             <TextView
                 android:id="@+id/studentGender"
@@ -75,7 +75,7 @@
                 android:layout_height="44dp"
                 android:hint="Gender"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/background_light" />
+                 />
 
             <TextView
                 android:id="@+id/studentDob"
@@ -83,7 +83,7 @@
                 android:layout_height="44dp"
                 android:hint="Date Of Birth"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/background_light" />
+                />
 
             <TextView
                 android:id="@+id/studentAddress"
@@ -91,7 +91,7 @@
                 android:layout_height="75dp"
                 android:hint="Address"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/background_light" />
+                 />
 
             <LinearLayout
                 android:layout_width="match_parent"
