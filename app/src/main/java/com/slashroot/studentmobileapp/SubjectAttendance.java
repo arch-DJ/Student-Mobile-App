@@ -6,12 +6,13 @@ package com.slashroot.studentmobileapp;
 
 public class SubjectAttendance {
     private  String subjectName;
-
-    public SubjectAttendance(String subjectName) {
+    public SubjectAttendance(String subjectName)
+    {
         this.subjectName = subjectName;
     }
 
-    public String getSubjectName() {
+    public String getSubjectName()
+    {
         return subjectName;
     }
 }
