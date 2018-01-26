@@ -142,7 +142,7 @@ public class StudentRegistration extends AppCompatActivity {
     }
 
     // Ensure password follows the given pattern
-    public boolean isValidPassword(final String password) {
+    public static boolean isValidPassword(final String password) {
         Pattern pattern;
         Matcher matcher;
 
