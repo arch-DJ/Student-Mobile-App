@@ -1,5 +1,6 @@
 package com.slashroot.studentmobileapp;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,10 +10,20 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +32,7 @@ public class StudentAttendance extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<SubjectAttendance> listOfSubjects;
-
+    private static final String attendanceURL= "https://simplifiedcoding.net/demos/view-flipper/heroes.php";
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -32,14 +43,11 @@ public class StudentAttendance extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         listOfSubjects=new ArrayList<>();
-        for(int i=0;i<=5;i++)
-        {
-            SubjectAttendance subject=new SubjectAttendance("MATHS"+i+1);
-            listOfSubjects.add(subject);
-        }
-        adapter = new AttendanceAdapterClass(listOfSubjects,this);
-        recyclerView.setAdapter(adapter);
-        /*ListView subjectList=(ListView)findViewById(R.id.subjectList);
+
+        loadRecyclerViewData();
+
+        /*
+        ListView subjectList=(ListView)findViewById(R.id.subjectList);
 
         JSONArray jArray = new JSONArray();
         JSONObject json_data;
@@ -67,6 +75,59 @@ public class StudentAttendance extends AppCompatActivity {
 
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void loadRecyclerViewData()
+    {
+        final ProgressDialog progressDialog=new ProgressDialog(this);
+        progressDialog.setMessage("Loading Data...");
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, attendanceURL,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        progressDialog.dismiss();
+                        try
+                        {
+                            JSONObject jsonObject=new JSONObject(response);
+                            JSONArray jsonArray=jsonObject.getJSONArray("heroes");
+
+                            for(int i=0;i<jsonArray.length();i++)
+                            {
+                                JSONObject currentJSON=jsonArray.getJSONObject(i);
+                                SubjectAttendance item=new SubjectAttendance(currentJSON.getString("name"));
+                                listOfSubjects.add(item);
+                            }
+
+                            adapter = new AttendanceAdapterClass(listOfSubjects,getApplicationContext());
+                            recyclerView.setAdapter(adapter);
+                        }
+                        catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+            ,
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(),"Some Error Occured please Try Again",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(),volleyError.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                }
+
+        );
+
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
     }
 
 
