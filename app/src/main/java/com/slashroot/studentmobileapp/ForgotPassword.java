@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,8 +28,9 @@ public class ForgotPassword extends AppCompatActivity {
     TextView usernameTextView, sendOtpTo, otpTextView;
     CheckBox usernameCheckbox;
     RadioButton emailRadioButton, mobileRadioButton;
-    Button sendOtpButton, submitOtpButton;
+    Button sendOtpButton, submitOtpButton, resendOtpButton;
     String username, email, phone, otpType, domain = "https://lit-springs-26930.herokuapp.com";
+    ProgressBar busyIndicator;
 
     public void initialize() {
         usernameTextView = findViewById(R.id.forgotPasswordUsername);
@@ -38,7 +40,9 @@ public class ForgotPassword extends AppCompatActivity {
         sendOtpTo = findViewById(R.id.forgotPasswordSendOtpTextView);
         sendOtpButton = findViewById(R.id.forgotPasswordSendOtpButton);
         submitOtpButton = findViewById(R.id.forgotPasswordSubmitOtp);
+        resendOtpButton = findViewById(R.id.forgotPasswordResendOtp);
         otpTextView = findViewById(R.id.forgotPasswordOtp);
+        busyIndicator = findViewById(R.id.forgotPasswordBusy);
     }
 
     public void confirmUsername(View view) {
@@ -46,6 +50,12 @@ public class ForgotPassword extends AppCompatActivity {
 
         if (checked) {
             username = usernameTextView.getText().toString();
+
+            if (username.isEmpty()) {
+                Toast.makeText(this, "Please enter your username!", Toast.LENGTH_SHORT).show();
+                usernameCheckbox.setChecked(false);
+                return;
+            }
             String url = domain + "/user/login/forgot";
             final JSONObject json = new JSONObject();
             try {
@@ -57,6 +67,7 @@ public class ForgotPassword extends AppCompatActivity {
                     new JsonObjectRequest(Request.Method.POST, url, json, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+                            busyIndicator.setVisibility(View.INVISIBLE);
                             try {
                                 email = response.getString("email");
                                 phone = response.getString("phone");
@@ -79,7 +90,13 @@ public class ForgotPassword extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            busyIndicator.setVisibility(View.INVISIBLE);
                             NetworkResponse networkResponse = error.networkResponse;
+                            if (networkResponse == null) {
+                                usernameCheckbox.setChecked(false);
+                                Toast.makeText(ForgotPassword.this, "No internet connection!", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             int responseCode = networkResponse.statusCode;
                             if (responseCode == 400) {
                                 Toast.makeText(ForgotPassword.this, "Invalid Login ID!", Toast.LENGTH_SHORT).show();
@@ -90,7 +107,7 @@ public class ForgotPassword extends AppCompatActivity {
                             usernameCheckbox.setChecked(false);
                         }
                     });
-
+            busyIndicator.setVisibility(View.VISIBLE);
             VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
         }
 
@@ -116,21 +133,83 @@ public class ForgotPassword extends AppCompatActivity {
                     new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+                            busyIndicator.setVisibility(View.INVISIBLE);
                             otpTextView.setVisibility(View.VISIBLE);
                             submitOtpButton.setVisibility(View.VISIBLE);
+                            resendOtpButton.setVisibility(View.VISIBLE);
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                                serverError();
+                            busyIndicator.setVisibility(View.INVISIBLE);
+                            NetworkResponse networkResponse = error.networkResponse;
+                            if (networkResponse == null) {
+                                Toast.makeText(ForgotPassword.this, "Internet Service not available!", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            int responseCode = networkResponse.statusCode;
+
+                            if (responseCode == 400) {
+                                Toast.makeText(ForgotPassword.this, "You've already requested for an OTP. Please try again after 5 minutes!", Toast.LENGTH_LONG).show();
+                            }
+
+                            else {
+                                Toast.makeText(ForgotPassword.this, "Server error!", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
+            busyIndicator.setVisibility(View.VISIBLE);
             VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
         }
     }
 
     public void onClickSubmitOtp(View view) {
+        String otp = otpTextView.getText().toString();
 
+        if (otp.isEmpty()) {
+            Toast.makeText(this, "Please enter the OTP!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String url;
+        JSONObject json = new JSONObject();
+        try {
+            json.put("otp", otp);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (otpType.equals("email"))
+            url = domain + "/user/verify/" + email;
+
+        else
+            url = domain + "/user/mobile/verify/" + phone;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, json, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                busyIndicator.setVisibility(View.INVISIBLE);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                busyIndicator.setVisibility(View.INVISIBLE);
+                NetworkResponse networkResponse = error.networkResponse;
+                if (networkResponse == null) {
+                    Toast.makeText(ForgotPassword.this, "No internet!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                int statusCode = networkResponse.statusCode;
+
+                if (statusCode == 400) {
+
+                }
+            }
+        });
+        busyIndicator.setVisibility(View.VISIBLE);
+        VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 
 
