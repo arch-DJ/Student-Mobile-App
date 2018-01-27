@@ -7,44 +7,26 @@
     tools:context="com.slashroot.studentmobileapp.ParentRegistration">
 
     <ScrollView
-        android:id="@+id/scrollViewParent"
+        android:id="@+id/parentRegistrationscrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-                <EditText
-                    android:id="@+id/parentAadhaar"
-                    android:layout_width="265dp"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Aadhaar Number"
-                    android:inputType="textPersonName"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    />
-
-                <CheckBox
-                    android:id="@+id/parentAadhaarCheckBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:visibility="visible"
-                    android:onClick="verifyAadhaar"/>
-            </LinearLayout>
 
             <EditText
                 android:id="@+id/parentName"
@@ -53,132 +35,213 @@
                 android:ems="10"
                 android:hint="Name"
                 android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/parentGenderSelection"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:ems="10"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp"
+                android:text="Select your gender:" />
+
             <RadioGroup
-                android:id="@+id/radioSex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-                <LinearLayout
-                    android:layout_width="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/parentMaleButton"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
+                    android:text="Male" />
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Male"
-                        android:text="Male" />
+                <RadioButton
+                    android:id="@+id/parentFemaleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Female" />
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="Female"
-                        android:text="Female" />
-                </LinearLayout>
+
             </RadioGroup>
 
-            <EditText
-                android:id="@+id/parentDob"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Date of birth"
-                android:inputType="textPersonName" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/parentDobButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="selectDob"
+                    android:text="Select DOB" />
+
+                <TextView
+                    android:id="@+id/parentDob"
+                    android:layout_width="153dp"
+                    android:layout_height="31dp"
+                    android:ems="10"
+                    android:paddingLeft="10dp"
+                    android:text="Date Of Birth"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:visibility="visible" />
+
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/parentAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:maxLines="4"
                 android:hint="Address"
-                android:inputType="textPersonName" />
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scrollHorizontally="false" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/parentAadhaar"
+                    android:layout_width="265dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Aadhaar Number"
+                    android:inputType="number"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <CheckBox
+                    android:id="@+id/parentAadhaarCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="verifyAadhaar"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
                 <EditText
                     android:id="@+id/parentEmail"
                     android:layout_width="265dp"
                     android:layout_height="wrap_content"
-                    android:ems="10"
                     android:hint="Email"
-                    android:inputType="textPersonName" />
+                    android:inputType="textEmailAddress"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <CheckBox
                     android:id="@+id/parentEmailCheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:visibility="visible"
-                    android:onClick="verifyEmail"/>
+                    android:onClick="verifyEmail"
+                    android:visibility="visible" />
+
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <EditText
-                    android:id="@+id/parentPhone"
+                    android:id="@+id/parentPhoneNumber"
                     android:layout_width="265dp"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Phone"
-                    android:inputType="phone" />
+                    android:hint="Phone Number"
+                    android:inputType="phone"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <CheckBox
                     android:id="@+id/parentPhoneCheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:visibility="visible"/>
+                    android:onClick="verifyPhone"
+                    android:visibility="visible" />
+
             </LinearLayout>
 
             <EditText
-                android:id="@+id/parentLoginIdRegistration"
+                android:id="@+id/parentUserid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Login ID"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:visibility="gone" />
-
+                android:ems="10"
+                android:hint="User ID"
+                android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/parentPasswordRegistration"
+                android:id="@+id/parentPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ems="10"
                 android:hint="Password"
-                android:inputType="textPassword"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:visibility="gone" />
+                android:inputType="textPassword" />
 
             <EditText
-                android:id="@+id/parentConfirmPasswordRegistration"
+                android:id="@+id/parentConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ems="10"
                 android:hint="Confirm Password"
-                android:inputType="textPassword"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:visibility="gone" />
+                android:inputType="textPassword" />
 
             <CheckBox
                 android:id="@+id/parentVerifyUserIdCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="parentVerifyUserId"
                 android:layout_weight="1"
-                android:onClick="studentVerifyUserId"
-                android:text="Confirm"
-                android:visibility="gone" />
+
+                android:text="Confirm UserID and Password"  />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/parentEmailOtp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Send OTP to email" />
+
+                <RadioButton
+                    android:id="@+id/parentPhoneOtp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Send OTP to phone" />
+
+
+            </RadioGroup>
 
             <Button
-                android:id="@+id/registerParentButton"
+                android:id="@+id/parentTeacherButton"
                 android:layout_width="220dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
-                android:onClick="onClickStudentRegister"
-                android:text="Register"
-                android:visibility="gone" />
+                android:onClick="onClickRegister"
+                android:text="Register"  />
+
 
         </LinearLayout>
+
     </ScrollView>
 
     <android.support.constraint.Guideline
@@ -201,7 +264,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/scrollView2"
+        app:layout_constraintTop_toTopOf="@+id/parentRegistrationscrollView"
         app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>

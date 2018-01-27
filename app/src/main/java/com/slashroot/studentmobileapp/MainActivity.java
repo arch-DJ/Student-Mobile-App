@@ -147,9 +147,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else if (sharedPreferences.getString("userType", "").equals("parent")) {
-            //Intent intent = new Intent(getApplicationContext(), ParentMainActivity.class);
-            Toast.makeText(this, "Welcome " + sharedPreferences.getString("name", "") + "!", Toast.LENGTH_SHORT).show();
-            //startActivity(intent);
+            Intent intent = new Intent(getApplicationContext(), ParentMainActivity.class);
+            startActivity(intent);
             finish();
         }
 
@@ -312,13 +311,27 @@ public class MainActivity extends AppCompatActivity {
                                         editor.putString("stream", json.getString("stream"));
                                         editor.putString("university", json.getString("university"));
                                         editor.apply();
+                                        Toast.makeText(MainActivity.this, "Welcome " + json.getString("name") + "!", Toast.LENGTH_SHORT).show();
                                         startActivity(intent);
                                         finish();
                                         break;
                                     }
                                     default:
-                                        //intent = new Intent(getApplicationContext(), ParentMainActivity.class);
-                                        //startActivity(intent);
+                                        Intent intent = new Intent(getApplicationContext(), ParentMainActivity.class);
+                                        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("UserDetails", 0);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putString("userType", userType);
+                                        editor.putString("name", json.getString("name"));
+                                        editor.putString("userName", json.getString("userName"));
+                                        editor.putString("gender", json.getString("gender"));
+                                        editor.putString("dob", json.getString("dob"));
+                                        editor.putString("address", json.getString("address"));
+                                        editor.putString("email", json.getString("email"));
+                                        editor.putString("aadhaar", json.getString("aadhaar"));
+                                        editor.putString("phone", json.getString("phone"));
+                                        editor.apply();
+                                        Toast.makeText(MainActivity.this, "Welcome " + json.getString("name") + "!", Toast.LENGTH_SHORT).show();
+                                        startActivity(intent);
                                         finish();
                                         break;
                                 }

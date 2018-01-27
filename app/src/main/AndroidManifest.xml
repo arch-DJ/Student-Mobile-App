@@ -34,10 +34,14 @@
         <activity android:name=".StudentAttendance" />
         <activity
             android:name=".ForgotPassword"
-            android:label="Forgot Password"></activity>
+            android:label="Forgot Password" />
         <activity
             android:name=".StudentMainActivity"
             android:label="@string/title_activity_student_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ParentMainActivity"
+            android:label="@string/title_activity_parent_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <service

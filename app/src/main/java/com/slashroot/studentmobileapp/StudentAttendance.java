@@ -125,9 +125,7 @@ public class StudentAttendance extends AppCompatActivity {
 
         );
 
-        RequestQueue requestQueue= Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
 
