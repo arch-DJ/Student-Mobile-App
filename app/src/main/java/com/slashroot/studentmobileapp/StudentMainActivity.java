@@ -57,8 +57,6 @@ public class StudentMainActivity extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
 
-
-
         @Override
         public Fragment getItem(int position) {
             return mFragmentList.get(position);
