@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         TextView passwordField = findViewById(R.id.password);
         String password = passwordField.getText().toString();
 
+        String token= FirebaseInstanceId.getInstance().getToken();
         if (username.isEmpty()) {
             Toast.makeText(this, "Please enter your Username", Toast.LENGTH_SHORT).show();
         }
@@ -57,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 json.put("username", username);
                 json.put("password", password);
+                json.put("token",token);
+                Log.i("Token",token);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
