@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "750942271122",
+    "firebase_url": "https://student-mobile-app.firebaseio.com",
+    "project_id": "student-mobile-app",
+    "storage_bucket": "student-mobile-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:750942271122:android:3e128698cdc5aa66",
+        "android_client_info": {
+          "package_name": "com.slashroot.studentmobileapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "750942271122-als8abio5do821aegdaqa7e0rdnntdtp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDm4VZvE8421yPxHSZx9EiSx-alx6t9g4U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
